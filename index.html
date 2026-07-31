@@ -198,6 +198,15 @@
   .cta-role{font-size:14px;color:var(--ink-soft);margin-top:4px;}
   .cta-contact{margin-top:20px;font-size:14px;color:var(--ink-soft);letter-spacing:.04em;}
   .cta-contact span{color:var(--accent);font-weight:700;}
+  .cta-link{
+    display:inline-block;margin-top:26px;
+    font-size:15px;font-weight:700;letter-spacing:.08em;
+    color:var(--accent);text-decoration:none;
+    border:1.5px solid var(--accent);border-radius:100px;
+    padding:11px 32px;
+    transition:all .18s ease;
+  }
+  .cta-link:hover{background:var(--accent);color:#fff;}
   @media(max-width:640px){ .cta{padding:40px 20px;} }
 
   footer{
@@ -205,6 +214,8 @@
     flex-wrap:wrap;gap:10px;font-size:12.5px;color:var(--ink-soft);letter-spacing:.04em;
   }
   footer .brand{font-family:'Noto Serif TC',serif;font-weight:700;color:var(--ink);}
+  footer a{color:var(--accent);font-weight:700;text-decoration:none;}
+  footer a:hover{text-decoration:underline;}
 
   /* ── Reveal ── */
   .reveal{opacity:0;transform:translateY(28px);transition:all .7s cubic-bezier(.4,0,.2,1);}
@@ -511,6 +522,7 @@
       <div class="cta-name">簡單廣告營銷</div>
       <div class="cta-role">Dan 楊旼璋 — Founder</div>
       <div class="cta-contact">Threads <span>@丹丹</span></div>
+      <a class="cta-link" href="/ecommerce/">電商廣告投放 服務對焦表（含報價）→</a>
     </div>
   </div>
 </section>
@@ -518,7 +530,7 @@
 <footer>
   <div class="wrap" style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;">
     <span class="brand">簡單廣告營銷有限公司</span>
-    <span>跨產業成效廣告投放 × 追蹤技術整合</span>
+    <span>跨產業成效廣告投放 × 追蹤技術整合 ・ <a href="/ecommerce/">服務報價頁</a></span>
   </div>
 </footer>
 

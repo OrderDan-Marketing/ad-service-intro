@@ -4,859 +4,440 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>簡單廣告營銷 — 會寫追蹤代碼的廣告投手</title>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@500;700;900&family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --bg-dark: #0a0a0f;
-    --bg-card: #12121a;
-    --accent: #00e5a0;
-    --accent-dim: rgba(0, 229, 160, 0.15);
-    --accent-glow: rgba(0, 229, 160, 0.4);
-    --text-primary: #f0f0f5;
-    --text-secondary: #8a8a9a;
-    --text-muted: #55556a;
-    --border: rgba(255,255,255,0.06);
-    --gradient-1: linear-gradient(135deg, #00e5a0 0%, #00b4d8 100%);
-    --gradient-2: linear-gradient(135deg, #0a0a0f 0%, #1a1a2e 100%);
-  }
-
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-
-  html {
-    scroll-behavior: smooth;
-    scroll-snap-type: y mandatory;
-  }
-
-  body {
-    font-family: 'Noto Sans TC', sans-serif;
-    background: var(--bg-dark);
-    color: var(--text-primary);
-    overflow-x: hidden;
-  }
-
-  /* ── Navigation ── */
-  nav {
-    position: fixed;
-    right: 2rem;
-    top: 50%;
-    transform: translateY(-50%);
-    z-index: 100;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-  }
-
-  nav a {
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    background: var(--text-muted);
-    transition: all 0.3s;
-    display: block;
-  }
-
-  nav a:hover, nav a.active {
-    background: var(--accent);
-    box-shadow: 0 0 12px var(--accent-glow);
-    transform: scale(1.4);
-  }
-
-  /* ── Slides ── */
-  section {
-    min-height: 100vh;
-    scroll-snap-align: start;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 4rem 6rem;
-    position: relative;
-    overflow: hidden;
-  }
-
-  @media (max-width: 768px) {
-    section { padding: 3rem 1.5rem; }
-    nav { right: 0.8rem; }
-  }
-
-  /* ── Slide 1: Cover ── */
-  #cover {
-    flex-direction: column;
-    text-align: center;
-    background: var(--gradient-2);
-  }
-
-  #cover::before {
-    content: '';
-    position: absolute;
-    width: 600px; height: 600px;
-    background: radial-gradient(circle, var(--accent-dim) 0%, transparent 70%);
-    top: 50%; left: 50%;
-    transform: translate(-50%, -50%);
-    animation: pulse 4s ease-in-out infinite;
-  }
-
-  @keyframes pulse {
-    0%, 100% { opacity: 0.5; transform: translate(-50%, -50%) scale(1); }
-    50% { opacity: 1; transform: translate(-50%, -50%) scale(1.15); }
-  }
-
-  .cover-badge {
-    font-family: 'Space Mono', monospace;
-    font-size: 0.75rem;
-    letter-spacing: 4px;
-    text-transform: uppercase;
-    color: var(--accent);
-    border: 1px solid var(--accent);
-    padding: 0.5rem 1.5rem;
-    border-radius: 100px;
-    margin-bottom: 2.5rem;
-    position: relative;
-    z-index: 1;
-    animation: fadeUp 0.8s ease 0.3s both;
-  }
-
-  .cover-intro {
-    position: relative;
-    z-index: 1;
-    margin-bottom: 2rem;
-    animation: fadeUp 0.8s ease both;
-  }
-
-  .cover-intro-greeting {
-    font-size: 1rem;
-    color: var(--text-muted);
-    font-weight: 300;
-    margin-bottom: 0.3rem;
-  }
-
-  .cover-intro-name {
-    font-size: clamp(2rem, 4vw, 3rem);
-    font-weight: 900;
-    letter-spacing: 2px;
-    line-height: 1.2;
-  }
-
-  .cover-intro-zh {
-    font-size: 0.6em;
-    font-weight: 400;
-    color: var(--text-secondary);
-    letter-spacing: 0;
-  }
-
-  .cover-intro-company {
-    font-family: 'Space Mono', monospace;
-    font-size: 0.8rem;
-    color: var(--accent);
-    margin-top: 0.4rem;
-    letter-spacing: 1px;
-  }
-
-  .cover-title {
-    font-size: clamp(2.5rem, 6vw, 5rem);
-    font-weight: 900;
-    line-height: 1.2;
-    margin-bottom: 1rem;
-    position: relative;
-    z-index: 1;
-    animation: fadeUp 0.8s ease 0.2s both;
-  }
-
-  .cover-title .highlight {
-    background: var(--gradient-1);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-
-  .cover-subtitle {
-    font-size: clamp(1rem, 2vw, 1.4rem);
-    color: var(--text-secondary);
-    font-weight: 300;
-    max-width: 600px;
-    margin: 0 auto 3rem;
-    position: relative;
-    z-index: 1;
-    animation: fadeUp 0.8s ease 0.4s both;
-  }
-
-  .cover-stats {
-    display: flex;
-    gap: 3rem;
-    position: relative;
-    z-index: 1;
-    animation: fadeUp 0.8s ease 0.6s both;
-  }
-
-  .stat-item {
-    text-align: center;
-  }
-
-  .stat-num {
-    font-family: 'Space Mono', monospace;
-    font-size: 2rem;
-    font-weight: 700;
-    color: var(--accent);
-  }
-
-  .stat-label {
-    font-size: 0.8rem;
-    color: var(--text-muted);
-    margin-top: 0.3rem;
-  }
-
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(30px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  /* ── Slide 2-6: Flow Steps ── */
-  .step-slide {
-    background: var(--gradient-2);
-  }
-
-  .step-container {
-    max-width: 1000px;
-    width: 100%;
-    display: grid;
-    grid-template-columns: 120px 1fr;
-    gap: 3rem;
-    align-items: start;
-  }
-
-  @media (max-width: 768px) {
-    .step-container { grid-template-columns: 80px 1fr; gap: 1.5rem; }
-  }
-
-  .step-number-block {
-    position: relative;
-  }
-
-  .step-number {
-    font-family: 'Space Mono', monospace;
-    font-size: 5rem;
-    font-weight: 700;
-    color: transparent;
-    -webkit-text-stroke: 1.5px var(--accent);
-    line-height: 1;
-  }
-
-  .step-of {
-    font-family: 'Space Mono', monospace;
-    font-size: 0.75rem;
-    color: var(--text-muted);
-    margin-top: 0.5rem;
-  }
-
-  .step-content h2 {
-    font-size: clamp(1.5rem, 3vw, 2.2rem);
-    font-weight: 700;
-    margin-bottom: 1.5rem;
-    line-height: 1.3;
-  }
-
-  .step-content h2 .accent {
-    color: var(--accent);
-  }
-
-  .step-content p {
-    font-size: 1.05rem;
-    color: var(--text-secondary);
-    line-height: 1.9;
-    max-width: 700px;
-    margin-bottom: 1.5rem;
-  }
-
-  .tag-row {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.6rem;
-    margin-top: 1rem;
-  }
-
-  .tag {
-    font-family: 'Space Mono', monospace;
-    font-size: 0.7rem;
-    padding: 0.4rem 1rem;
-    background: var(--accent-dim);
-    color: var(--accent);
-    border-radius: 4px;
-    letter-spacing: 0.5px;
-  }
-
-  .step-visual-box {
-    margin-top: 2rem;
-    background: var(--bg-card);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 1.5rem 2rem;
-    position: relative;
-  }
-
-  .step-visual-box::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 2px;
-    background: var(--gradient-1);
-    border-radius: 12px 12px 0 0;
-  }
-
-  .funnel {
-    display: flex;
-    align-items: center;
-    gap: 0;
-    justify-content: center;
-  }
-
-  .funnel-step {
-    text-align: center;
-    flex: 1;
-    padding: 1rem 0.5rem;
-    position: relative;
-  }
-
-  .funnel-step .f-label {
-    font-size: 0.85rem;
-    font-weight: 700;
-    margin-bottom: 0.3rem;
-  }
-
-  .funnel-step .f-desc {
-    font-size: 0.7rem;
-    color: var(--text-muted);
-  }
-
-  .funnel-bar {
-    height: 6px;
-    border-radius: 3px;
-    margin: 0.6rem auto 0;
-  }
-
-  .funnel-step:nth-child(1) .funnel-bar { width: 100%; background: #00e5a0; }
-  .funnel-step:nth-child(2) .funnel-bar { width: 70%; background: #00c9b8; }
-  .funnel-step:nth-child(3) .funnel-bar { width: 40%; background: #00b4d8; }
-
-  .funnel-arrow {
-    font-size: 1.2rem;
-    color: var(--text-muted);
-    flex-shrink: 0;
-    margin: 0 -0.5rem;
-  }
-
-  /* ── Slide 7: Portfolio ── */
-  #portfolio {
-    flex-direction: column;
-    background: var(--gradient-2);
-    padding-top: 5rem;
-    padding-bottom: 5rem;
-  }
-
-  .portfolio-header {
-    text-align: center;
-    margin-bottom: 3.5rem;
-  }
-
-  .portfolio-header h2 {
-    font-size: clamp(1.8rem, 4vw, 2.8rem);
-    font-weight: 900;
-    margin-bottom: 0.8rem;
-  }
-
-  .portfolio-header p {
-    color: var(--text-secondary);
-    font-size: 1rem;
-  }
-
-  .portfolio-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 1.2rem;
-    max-width: 1100px;
-    width: 100%;
-  }
-
-  .portfolio-card {
-    background: var(--bg-card);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 1.5rem;
-    transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-    position: relative;
-    overflow: hidden;
-  }
-
-  .portfolio-card::after {
-    content: '';
-    position: absolute;
-    bottom: 0; left: 0; right: 0;
-    height: 2px;
-    background: var(--gradient-1);
-    opacity: 0;
-    transition: opacity 0.3s;
-  }
-
-  .portfolio-card:hover {
-    border-color: rgba(0, 229, 160, 0.2);
-    transform: translateY(-4px);
-    box-shadow: 0 16px 48px rgba(0,0,0,0.4);
-  }
-
-  .portfolio-card:hover::after { opacity: 1; }
-
-  .card-industry {
-    font-size: 0.7rem;
-    font-family: 'Space Mono', monospace;
-    color: var(--accent);
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    margin-bottom: 0.6rem;
-  }
-
-  .card-client {
-    font-size: 1.1rem;
-    font-weight: 700;
-    margin-bottom: 0.8rem;
-    line-height: 1.3;
-  }
-
-  .card-channels {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.4rem;
-  }
-
-  .channel-tag {
-    font-size: 0.65rem;
-    padding: 0.3rem 0.7rem;
-    border-radius: 100px;
-    font-weight: 500;
-  }
-
-  .channel-tag.fb { background: rgba(66, 103, 178, 0.2); color: #7b9bd8; }
-  .channel-tag.google { background: rgba(234, 67, 53, 0.2); color: #ef8a82; }
-  .channel-tag.seo { background: rgba(251, 188, 4, 0.2); color: #f0d060; }
-  .channel-tag.web { background: rgba(138, 43, 226, 0.2); color: #c490f0; }
-  .channel-tag.ec { background: rgba(255, 140, 0, 0.2); color: #ffb060; }
-  .channel-tag.n8n { background: rgba(0, 229, 160, 0.2); color: #00e5a0; }
-
-  /* ── Slide 8: CTA ── */
-  #cta {
-    flex-direction: column;
-    text-align: center;
-    background: var(--gradient-2);
-  }
-
-  #cta::before {
-    content: '';
-    position: absolute;
-    width: 800px; height: 800px;
-    background: radial-gradient(circle, rgba(0, 229, 160, 0.06) 0%, transparent 70%);
-    top: 50%; left: 50%;
-    transform: translate(-50%, -50%);
-  }
-
-  .cta-slogan {
-    font-size: clamp(1.6rem, 4vw, 2.8rem);
-    font-weight: 900;
-    line-height: 1.4;
-    margin-bottom: 2rem;
-    position: relative;
-    z-index: 1;
-  }
-
-  .cta-slogan .thin {
-    font-weight: 300;
-    color: var(--text-secondary);
-  }
-
-  .cta-divider {
-    width: 60px;
-    height: 2px;
-    background: var(--gradient-1);
-    margin: 0 auto 2rem;
-    position: relative;
-    z-index: 1;
-  }
-
-  .cta-name {
-    font-size: 1.2rem;
-    font-weight: 700;
-    margin-bottom: 0.3rem;
-    position: relative;
-    z-index: 1;
-  }
-
-  .cta-role {
-    font-size: 0.9rem;
-    color: var(--text-secondary);
-    margin-bottom: 2rem;
-    position: relative;
-    z-index: 1;
-  }
-
-  .cta-contact {
-    display: flex;
-    gap: 2rem;
-    flex-wrap: wrap;
-    justify-content: center;
-    position: relative;
-    z-index: 1;
-  }
-
-  .cta-contact-item {
-    font-family: 'Space Mono', monospace;
-    font-size: 0.8rem;
-    color: var(--text-muted);
-  }
-
-  .cta-contact-item span {
-    color: var(--accent);
-  }
-
-  /* ── Scroll animations ── */
-  .reveal {
-    opacity: 0;
-    transform: translateY(40px);
-    transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-  }
-
-  .reveal.visible {
-    opacity: 1;
-    transform: translateY(0);
-  }
-
-  /* ── Large screens ── */
-  @media (min-width: 1200px) {
-    .cover-intro-greeting { font-size: 1.3rem; }
-    .cover-intro-name { font-size: 3.5rem; }
-    .cover-intro-company { font-size: 1rem; }
-    .cover-badge { font-size: 0.9rem; letter-spacing: 5px; padding: 0.6rem 2rem; }
-    .cover-subtitle { font-size: 1.6rem; }
-    .stat-num { font-size: 2.8rem; }
-    .stat-label { font-size: 1rem; }
-    .step-number { font-size: 6rem; }
-    .step-of { font-size: 0.9rem; }
-    .step-content h2 { font-size: 2.6rem; }
-    .step-content p { font-size: 1.25rem; }
-    .tag { font-size: 0.85rem; padding: 0.5rem 1.2rem; }
-    .funnel-step .f-label { font-size: 1.1rem; }
-    .funnel-step .f-desc { font-size: 0.85rem; }
-    .portfolio-header h2 { font-size: 3rem; }
-    .portfolio-header p { font-size: 1.2rem; }
-    .card-industry { font-size: 0.8rem; }
-    .card-client { font-size: 1.3rem; }
-    .channel-tag { font-size: 0.8rem; padding: 0.4rem 0.9rem; }
-    .cta-slogan { font-size: 3.2rem; }
-    .cta-name { font-size: 1.5rem; }
-    .cta-role { font-size: 1.1rem; }
-    .cta-contact-item { font-size: 1rem; }
-  }
-
-  @media (min-width: 1600px) {
-    .cover-intro-greeting { font-size: 1.5rem; }
-    .cover-intro-name { font-size: 4rem; }
-    .cover-intro-company { font-size: 1.1rem; }
-    .cover-badge { font-size: 1rem; padding: 0.7rem 2.2rem; }
-    .cover-subtitle { font-size: 1.8rem; }
-    .stat-num { font-size: 3.2rem; }
-    .stat-label { font-size: 1.1rem; }
-    .step-number { font-size: 7rem; }
-    .step-content h2 { font-size: 3rem; }
-    .step-content p { font-size: 1.4rem; }
-    .tag { font-size: 0.95rem; padding: 0.55rem 1.4rem; }
-    .funnel-step .f-label { font-size: 1.25rem; }
-    .funnel-step .f-desc { font-size: 0.95rem; }
-    .portfolio-header h2 { font-size: 3.5rem; }
-    .portfolio-header p { font-size: 1.35rem; }
-    .card-industry { font-size: 0.9rem; }
-    .card-client { font-size: 1.5rem; }
-    .channel-tag { font-size: 0.9rem; padding: 0.45rem 1rem; }
-    .cta-slogan { font-size: 3.8rem; }
-    .cta-name { font-size: 1.7rem; }
-    .cta-role { font-size: 1.25rem; }
-    .cta-contact-item { font-size: 1.1rem; }
-  }
-
-  /* ── Print / PDF ── */
-  @media print {
-    html { scroll-snap-type: none; }
-    section { min-height: auto; page-break-after: always; padding: 2rem; }
-    nav { display: none; }
-    .reveal { opacity: 1; transform: none; }
+  :root{
+    --ink:#16140f;
+    --ink-soft:#52493b;
+    --paper:#f4f0e6;
+    --paper-2:#ebe5d6;
+    --card:#fbf9f2;
+    --accent:#b5462a;
+    --accent-soft:#d9744f;
+    --gold:#a6822c;
+    --line:#ddd5c2;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:'Noto Sans TC',sans-serif;
+    background:var(--paper);
+    color:var(--ink);
+    line-height:1.7;
+    -webkit-font-smoothing:antialiased;
+    background-image:
+      radial-gradient(circle at 12% 6%, rgba(181,70,42,.05), transparent 40%),
+      radial-gradient(circle at 88% 92%, rgba(166,130,44,.06), transparent 42%);
+  }
+  .wrap{max-width:1140px;margin:0 auto;padding:0 40px;}
+  @media(max-width:1024px){ .wrap{padding:0 30px;} }
+  @media(max-width:640px){ .wrap{padding:0 20px;} }
+
+  /* ── Hero ── */
+  .hero{padding:88px 0 64px;border-bottom:2px solid var(--ink);position:relative;}
+  .hero .eyebrow{
+    display:inline-block;
+    font-size:12px;letter-spacing:.42em;text-transform:uppercase;
+    color:var(--accent);font-weight:700;
+    border:1px solid var(--accent);border-radius:100px;
+    padding:6px 22px;margin-bottom:28px;
+  }
+  .hero-greet{font-size:16px;color:var(--ink-soft);font-weight:300;}
+  .hero-name{
+    font-family:'Noto Serif TC',serif;font-weight:900;
+    font-size:clamp(26px,3.4vw,36px);line-height:1.3;margin-top:2px;
+  }
+  .hero-name .zh{font-size:.62em;font-weight:500;color:var(--ink-soft);}
+  .hero-company{font-size:13px;letter-spacing:.18em;color:var(--gold);font-weight:700;margin-top:6px;}
+  h1{
+    font-family:'Noto Serif TC',serif;font-weight:900;
+    font-size:clamp(38px,6vw,64px);line-height:1.18;letter-spacing:.01em;
+    margin-top:34px;
+  }
+  h1 .highlight{color:var(--accent);}
+  .hero-sub{
+    font-size:clamp(15px,1.8vw,19px);color:var(--ink-soft);font-weight:300;
+    margin-top:18px;max-width:640px;
+  }
+  .hero-stats{display:flex;gap:56px;flex-wrap:wrap;margin-top:44px;}
+  .stat .num{
+    font-family:'Noto Serif TC',serif;font-weight:900;
+    font-size:clamp(30px,4vw,42px);color:var(--accent);line-height:1.1;
+  }
+  .stat .label{font-size:13.5px;color:var(--ink-soft);margin-top:6px;letter-spacing:.04em;}
+  .hero .mark{
+    position:absolute;top:88px;right:40px;width:56px;height:56px;
+    border:2px solid var(--gold);border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Noto Serif TC',serif;font-weight:900;font-size:23px;color:var(--gold);
+  }
+  @media(max-width:640px){
+    .hero{padding:56px 0 44px;}
+    .hero .mark{display:none;}
+    .hero-stats{gap:32px;margin-top:32px;}
+  }
+
+  /* ── Sections ── */
+  .section{padding:64px 0;}
+  @media(max-width:1024px){ .section{padding:48px 0;} }
+  @media(max-width:640px){ .section{padding:40px 0;} }
+  .sec-head{display:flex;align-items:baseline;gap:16px;margin-bottom:30px;}
+  .sec-num{font-family:'Noto Serif TC',serif;font-weight:900;font-size:22px;color:var(--accent);}
+  .sec-title{font-family:'Noto Serif TC',serif;font-weight:700;font-size:clamp(22px,3vw,28px);}
+  .sec-head .rule{flex:1;height:1px;background:var(--line);align-self:center;}
+  .sec-lede{font-size:15px;color:var(--ink-soft);margin:-16px 0 28px;}
+
+  /* ── Process steps (01–05 合併) ── */
+  .step{
+    display:flex;gap:22px;padding:22px 26px;background:var(--card);
+    border:1px solid var(--line);border-radius:4px;margin-bottom:12px;
+    transition:transform .18s ease, box-shadow .18s ease;
+  }
+  .step:hover{transform:translateX(4px);box-shadow:-4px 4px 0 var(--paper-2);}
+  .step .n{
+    flex-shrink:0;width:52px;
+    font-family:'Noto Serif TC',serif;font-weight:900;font-size:30px;
+    color:transparent;-webkit-text-stroke:1.3px var(--accent);
+    line-height:1.15;
+  }
+  .step .body{flex:1;}
+  .step .t{font-family:'Noto Serif TC',serif;font-weight:700;font-size:19px;}
+  .step .t em{font-style:normal;color:var(--accent);}
+  .step .d{font-size:14.5px;color:var(--ink-soft);margin-top:6px;line-height:1.8;max-width:760px;}
+  .tag-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px;}
+  .tag{
+    font-size:12px;font-weight:500;letter-spacing:.05em;
+    padding:4px 12px;border-radius:3px;
+    background:var(--paper-2);color:var(--ink-soft);
+    border:1px solid var(--line);
+  }
+  .funnel{
+    display:flex;align-items:center;gap:10px;flex-wrap:wrap;
+    margin-top:12px;font-size:13.5px;
+  }
+  .funnel b{
+    font-weight:700;padding:5px 14px;border-radius:3px;background:var(--paper-2);
+    border-left:3px solid var(--accent);
+  }
+  .funnel b:nth-child(3){border-left-color:var(--accent-soft);}
+  .funnel b:nth-child(5){border-left-color:var(--gold);}
+  .funnel span{color:var(--ink-soft);}
+  .funnel .f-note{width:100%;font-size:12.5px;color:var(--ink-soft);}
+  @media(max-width:640px){
+    .step{padding:18px;gap:14px;}
+    .step .n{width:40px;font-size:24px;}
+  }
+
+  /* ── Portfolio ── */
+  .portfolio-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(255px,1fr));
+    gap:14px;
+  }
+  .p-card{
+    background:var(--card);border:1px solid var(--line);border-radius:4px;
+    padding:20px 22px;position:relative;overflow:hidden;
+    transition:transform .2s ease, box-shadow .2s ease;
+  }
+  .p-card::after{
+    content:'';position:absolute;bottom:0;left:0;right:0;height:2px;
+    background:var(--accent);opacity:0;transition:opacity .2s;
+  }
+  .p-card:hover{transform:translateY(-3px);box-shadow:0 10px 24px rgba(22,20,15,.08);}
+  .p-card:hover::after{opacity:1;}
+  .p-ind{
+    font-size:11px;letter-spacing:.24em;font-weight:700;
+    color:var(--accent);text-transform:uppercase;margin-bottom:6px;
+  }
+  .p-client{font-family:'Noto Serif TC',serif;font-weight:700;font-size:16.5px;line-height:1.45;margin-bottom:12px;}
+  .p-tags{display:flex;flex-wrap:wrap;gap:6px;}
+  .ch{font-size:11.5px;font-weight:500;padding:3px 10px;border-radius:100px;}
+  .ch.fb{background:rgba(66,103,178,.12);color:#33568f;}
+  .ch.google{background:rgba(234,67,53,.1);color:#a33326;}
+  .ch.ig{background:rgba(225,48,108,.1);color:#a12a58;}
+  .ch.seo{background:rgba(166,130,44,.16);color:#7d6120;}
+  .ch.web{background:rgba(107,63,160,.1);color:#5c3689;}
+  .ch.ec{background:rgba(200,110,20,.12);color:#8f5410;}
+  .ch.n8n{background:rgba(0,137,123,.12);color:#00655c;}
+
+  /* ── CTA ── */
+  .cta{
+    margin:24px 0 0;padding:56px 40px;text-align:center;
+    background:var(--card);border:1px solid var(--line);
+    border-top:4px solid var(--accent);border-radius:4px;
+  }
+  .cta-slogan{
+    font-family:'Noto Serif TC',serif;font-weight:900;
+    font-size:clamp(24px,4vw,38px);line-height:1.5;
+  }
+  .cta-slogan .thin{font-weight:500;color:var(--ink-soft);}
+  .cta-slogan .highlight{color:var(--accent);}
+  .cta-divider{width:56px;height:2px;background:var(--gold);margin:24px auto;}
+  .cta-name{font-family:'Noto Serif TC',serif;font-weight:700;font-size:19px;}
+  .cta-role{font-size:14px;color:var(--ink-soft);margin-top:4px;}
+  .cta-contact{margin-top:20px;font-size:14px;color:var(--ink-soft);letter-spacing:.04em;}
+  .cta-contact span{color:var(--accent);font-weight:700;}
+  @media(max-width:640px){ .cta{padding:40px 20px;} }
+
+  footer{
+    padding:28px 0 44px;display:flex;justify-content:space-between;
+    flex-wrap:wrap;gap:10px;font-size:12.5px;color:var(--ink-soft);letter-spacing:.04em;
+  }
+  footer .brand{font-family:'Noto Serif TC',serif;font-weight:700;color:var(--ink);}
+
+  /* ── Reveal ── */
+  .reveal{opacity:0;transform:translateY(28px);transition:all .7s cubic-bezier(.4,0,.2,1);}
+  .reveal.visible{opacity:1;transform:translateY(0);}
+
+  @media print{
+    body{background:#fff;}
+    .step:hover,.p-card:hover{transform:none;box-shadow:none;}
+    .reveal{opacity:1;transform:none;}
   }
 </style>
 </head>
 <body>
 
-<!-- Navigation Dots -->
-<nav id="nav">
-  <a href="#cover" class="active"></a>
-  <a href="#step1"></a>
-  <a href="#step2"></a>
-  <a href="#step3"></a>
-  <a href="#step4"></a>
-  <a href="#step5"></a>
-  <a href="#portfolio"></a>
-  <a href="#cta"></a>
-</nav>
-
-<!-- ════════════════════════ COVER ════════════════════════ -->
-<section id="cover">
-  <div class="cover-intro">
-    <div class="cover-intro-greeting">Hi, 我是</div>
-    <div class="cover-intro-name">Dan<span class="cover-intro-zh">（丹）</span></div>
-    <div class="cover-intro-company">簡單廣告營銷 ・ Founder</div>
-  </div>
-  <div class="cover-badge">DIGITAL MARKETING</div>
-  <h1 class="cover-title">
-    <span class="highlight">會寫追蹤代碼</span><br>的廣告投手
-  </h1>
-  <p class="cover-subtitle">
-    行銷背景出身，從追蹤埋設、廣告投放到 AI 自動化優化，<br>一站式整合解決方案
-  </p>
-  <div class="cover-stats">
-    <div class="stat-item">
-      <div class="stat-num">1,000萬+</div>
-      <div class="stat-label">年度管理廣告預算 (NTD)</div>
-    </div>
-    <div class="stat-item">
-      <div class="stat-num">1億+</div>
-      <div class="stat-label">累計協助客戶營收 (NTD)</div>
-    </div>
-  </div>
-</section>
-
-<!-- ════════════════════════ STEP 1 ════════════════════════ -->
-<section id="step1" class="step-slide">
-  <div class="step-container reveal">
-    <div class="step-number-block">
-      <div class="step-number">01</div>
-      <div class="step-of">/ 05</div>
-    </div>
-    <div class="step-content">
-      <h2>分析<span class="accent">產業別</span></h2>
-      <p>
-        每個產業的受眾行為、競爭態勢、旺淡季節奏都不同。投放前先深入研究您的產業特性，分析競品廣告策略與受眾輪廓，為後續的投放策略建立精準的基礎框架。
-      </p>
-      <p>
-        不是套模板，而是根據您的產業現況，量身打造專屬的廣告作戰計畫。
-      </p>
-      <div class="tag-row">
-        <span class="tag">競品分析</span>
-        <span class="tag">受眾研究</span>
-        <span class="tag">季節性策略</span>
-        <span class="tag">市場定位</span>
+<!-- ════════════════════════ HERO ════════════════════════ -->
+<header class="hero">
+  <div class="wrap">
+    <div class="mark">廣</div>
+    <span class="eyebrow">Digital Marketing</span>
+    <div class="hero-greet">Hi, 我是</div>
+    <div class="hero-name">Dan<span class="zh">（丹）</span></div>
+    <div class="hero-company">簡單廣告營銷 ・ FOUNDER</div>
+    <h1><span class="highlight">會寫追蹤代碼</span><br>的廣告投手</h1>
+    <p class="hero-sub">行銷背景出身，從追蹤埋設、廣告投放到 AI 自動化優化，一站式整合解決方案</p>
+    <div class="hero-stats">
+      <div class="stat">
+        <div class="num">1,000萬+</div>
+        <div class="label">年度管理廣告預算 (NTD)</div>
+      </div>
+      <div class="stat">
+        <div class="num">1億+</div>
+        <div class="label">累計協助客戶營收 (NTD)</div>
       </div>
     </div>
   </div>
-</section>
+</header>
 
-<!-- ════════════════════════ STEP 2 ════════════════════════ -->
-<section id="step2" class="step-slide">
-  <div class="step-container reveal">
-    <div class="step-number-block">
-      <div class="step-number">02</div>
-      <div class="step-of">/ 05</div>
+<!-- ════════════════════════ 服務流程 01–05 ════════════════════════ -->
+<section class="section">
+  <div class="wrap reveal">
+    <div class="sec-head">
+      <span class="sec-num">01</span>
+      <span class="sec-title">服務流程</span>
+      <span class="rule"></span>
     </div>
-    <div class="step-content">
-      <h2>確認網站<span class="accent">追蹤代碼</span>及串接完整性</h2>
-      <p>
-        這是我的核心差異化。多數廣告投手只會操作後台，但追蹤代碼沒埋好，所有的優化都是在瞎猜。我會親自檢查並建置完整的追蹤架構，確保每一筆轉換都被正確記錄。
-      </p>
-      <p>
-        從 GTM 容器部署、Meta Pixel 與 Conversions API 的雙重驗證、GA4 事件追蹤，到伺服器端追蹤的建置 — 讓數據不再有黑洞。
-      </p>
-      <div class="tag-row">
-        <span class="tag">GTM</span>
-        <span class="tag">Meta Pixel + CAPI</span>
-        <span class="tag">GA4</span>
-        <span class="tag">Server-Side Tracking</span>
-        <span class="tag">轉換追蹤</span>
-      </div>
-    </div>
-  </div>
-</section>
 
-<!-- ════════════════════════ STEP 3 ════════════════════════ -->
-<section id="step3" class="step-slide">
-  <div class="step-container reveal">
-    <div class="step-number-block">
-      <div class="step-number">03</div>
-      <div class="step-of">/ 05</div>
-    </div>
-    <div class="step-content">
-      <h2>依照<span class="accent">銷售漏斗</span>設立廣告活動</h2>
-      <p>
-        一個廣告活動塞入多個目標，是最常見的預算浪費方式。我會根據銷售漏斗的每一層，各自設立獨立且目標明確的廣告活動，讓演算法能精準學習、有效優化。
-      </p>
-      <div class="step-visual-box">
-        <div class="funnel">
-          <div class="funnel-step">
-            <div class="f-label" style="color:#00e5a0;">曝光</div>
-            <div class="f-desc">品牌認知 / 觸及</div>
-            <div class="funnel-bar"></div>
-          </div>
-          <div class="funnel-arrow">→</div>
-          <div class="funnel-step">
-            <div class="f-label" style="color:#00c9b8;">互動</div>
-            <div class="f-desc">流量 / 互動 / 名單</div>
-            <div class="funnel-bar"></div>
-          </div>
-          <div class="funnel-arrow">→</div>
-          <div class="funnel-step">
-            <div class="f-label" style="color:#00b4d8;">轉換</div>
-            <div class="f-desc">購買 / 表單 / 來電</div>
-            <div class="funnel-bar"></div>
-          </div>
+    <div class="step">
+      <div class="n">01</div>
+      <div class="body">
+        <div class="t">分析<em>產業別</em></div>
+        <div class="d">每個產業的受眾行為、競爭態勢、旺淡季節奏都不同。投放前先研究產業特性與競品策略，依現況量身打造投放框架，不套模板。</div>
+        <div class="tag-row">
+          <span class="tag">競品分析</span><span class="tag">受眾研究</span><span class="tag">季節性策略</span><span class="tag">市場定位</span>
         </div>
       </div>
     </div>
-  </div>
-</section>
 
-<!-- ════════════════════════ STEP 4 ════════════════════════ -->
-<section id="step4" class="step-slide">
-  <div class="step-container reveal">
-    <div class="step-number-block">
-      <div class="step-number">04</div>
-      <div class="step-of">/ 05</div>
-    </div>
-    <div class="step-content">
-      <h2>建置客製 <span class="accent">AI 助理</span>，日追蹤績效</h2>
-      <p>
-        透過 n8n 自動化工作流，串接各廣告平台數據至 Google Sheets，搭配客製化 AI 助理，每日自動監控關鍵指標異常、產出優化建議，讓廣告優化從「週報等結果」升級為「每日即時反應」。
-      </p>
-      <div class="tag-row">
-        <span class="tag">n8n 自動化</span>
-        <span class="tag">AI 績效監控</span>
-        <span class="tag">每日異常偵測</span>
-        <span class="tag">自動優化建議</span>
+    <div class="step">
+      <div class="n">02</div>
+      <div class="body">
+        <div class="t">確認網站<em>追蹤代碼</em>及串接完整性</div>
+        <div class="d">核心差異化。追蹤沒埋好，所有優化都是瞎猜——親自檢查並建置 GTM、Meta Pixel + CAPI、GA4 到伺服器端追蹤，確保每一筆轉換都被正確記錄。</div>
+        <div class="tag-row">
+          <span class="tag">GTM</span><span class="tag">Meta Pixel + CAPI</span><span class="tag">GA4</span><span class="tag">Server-Side Tracking</span>
+        </div>
       </div>
     </div>
-  </div>
-</section>
 
-<!-- ════════════════════════ STEP 5 ════════════════════════ -->
-<section id="step5" class="step-slide">
-  <div class="step-container reveal">
-    <div class="step-number-block">
-      <div class="step-number">05</div>
-      <div class="step-of">/ 05</div>
-    </div>
-    <div class="step-content">
-      <h2>維持<span class="accent">穩定銷售</span>循環</h2>
-      <p>
-        廣告不是一次性的衝刺，而是持續運轉的銷售引擎。透過再行銷受眾的精準經營、廣告素材的持續迭代、預算的動態調配，將短期的廣告投放轉化為長期穩定的營收成長動力。
-      </p>
-      <div class="tag-row">
-        <span class="tag">再行銷受眾</span>
-        <span class="tag">素材迭代</span>
-        <span class="tag">預算動態調配</span>
-        <span class="tag">長期營收成長</span>
+    <div class="step">
+      <div class="n">03</div>
+      <div class="body">
+        <div class="t">依照<em>銷售漏斗</em>設立廣告活動</div>
+        <div class="d">一個活動塞多個目標是最常見的預算浪費。依漏斗每一層設立目標明確的獨立活動，讓演算法精準學習、有效優化。</div>
+        <div class="funnel">
+          <b>曝光</b><span>→</span><b>互動</b><span>→</span><b>轉換</b>
+          <span class="f-note">品牌認知／觸及 → 流量／互動／名單 → 購買／表單／來電</span>
+        </div>
       </div>
     </div>
+
+    <div class="step">
+      <div class="n">04</div>
+      <div class="body">
+        <div class="t">建置客製 <em>AI 助理</em>，日追蹤績效</div>
+        <div class="d">n8n 自動化串接各平台數據，AI 助理每日監控指標異常、產出優化建議——從「週報等結果」升級為「每日即時反應」。</div>
+        <div class="tag-row">
+          <span class="tag">n8n 自動化</span><span class="tag">AI 績效監控</span><span class="tag">每日異常偵測</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="n">05</div>
+      <div class="body">
+        <div class="t">維持<em>穩定銷售</em>循環</div>
+        <div class="d">廣告不是一次性衝刺。再行銷受眾經營、素材持續迭代、預算動態調配，把投放轉化為長期穩定的營收成長動力。</div>
+        <div class="tag-row">
+          <span class="tag">再行銷受眾</span><span class="tag">素材迭代</span><span class="tag">預算動態調配</span>
+        </div>
+      </div>
+    </div>
+
   </div>
 </section>
 
-<!-- ════════════════════════ PORTFOLIO ════════════════════════ -->
-<section id="portfolio">
-  <div class="reveal" style="width:100%; max-width:1100px;">
-    <div class="portfolio-header">
-      <h2>跨產業<span style="color:var(--accent);">實戰紀錄</span></h2>
-      <p>服務橫跨多種產業，廣告投放 × 技術整合雙軌並行</p>
+<!-- ════════════════════════ 跨產業實戰紀錄 ════════════════════════ -->
+<section class="section" style="padding-top:0;">
+  <div class="wrap reveal">
+    <div class="sec-head">
+      <span class="sec-num">02</span>
+      <span class="sec-title">跨產業實戰紀錄</span>
+      <span class="rule"></span>
     </div>
+    <p class="sec-lede">服務橫跨多種產業，廣告投放 × 技術整合雙軌並行</p>
     <div class="portfolio-grid">
 
-      <div class="portfolio-card">
-        <div class="card-industry">電商零售</div>
-        <div class="card-client">財神小舖 / KUDONG 酷凍</div>
-        <div class="card-channels">
-          <span class="channel-tag fb">Facebook Ads</span>
-          <span class="channel-tag google">Google Ads</span>
+      <div class="p-card">
+        <div class="p-ind">看護長照</div>
+        <div class="p-client">順心 / 恆愛 / 優善 / 晴美 / 仁安 / 力威 / 久伴 / 長安</div>
+        <div class="p-tags">
+          <span class="ch google">Google Ads</span>
+          <span class="ch seo">SEO</span>
+          <span class="ch web">網站設計</span>
         </div>
       </div>
 
-      <div class="portfolio-card">
-        <div class="card-industry">電商零售</div>
-        <div class="card-client">三劍客歐陸嚴選</div>
-        <div class="card-channels">
-          <span class="channel-tag fb">Facebook Ads</span>
+      <div class="p-card">
+        <div class="p-ind">人力仲介</div>
+        <div class="p-client">中豪人力仲介</div>
+        <div class="p-tags">
+          <span class="ch n8n">n8n 自動化</span>
+          <span class="ch seo">SEO</span>
+          <span class="ch web">網站設計</span>
         </div>
       </div>
 
-      <div class="portfolio-card">
-        <div class="card-industry">餐飲食品</div>
-        <div class="card-client">麗園尋鮮坊</div>
-        <div class="card-channels">
-          <span class="channel-tag fb">Facebook Ads</span>
-          <span class="channel-tag ec">電商賣場建置</span>
+      <div class="p-card">
+        <div class="p-ind">室內設計</div>
+        <div class="p-client">萬寶隆空間設計</div>
+        <div class="p-tags">
+          <span class="ch fb">Facebook Ads</span>
+          <span class="ch google">Google Ads</span>
         </div>
       </div>
 
-      <div class="portfolio-card">
-        <div class="card-industry">交友服務</div>
-        <div class="card-client">圈出新戀情 / 心跳配對 MatchUp</div>
-        <div class="card-channels">
-          <span class="channel-tag fb">Facebook Ads</span>
+      <div class="p-card">
+        <div class="p-ind">室內設計</div>
+        <div class="p-client">品家設計</div>
+        <div class="p-tags">
+          <span class="ch web">網站設計</span>
+          <span class="ch seo">SEO</span>
         </div>
       </div>
 
-      <div class="portfolio-card">
-        <div class="card-industry">音樂工作室</div>
-        <div class="card-client">悉尼音樂工作室</div>
-        <div class="card-channels">
-          <span class="channel-tag fb">Facebook Ads</span>
+      <div class="p-card">
+        <div class="p-ind">餐飲食品</div>
+        <div class="p-client">麗園尋鮮坊</div>
+        <div class="p-tags">
+          <span class="ch fb">Facebook Ads</span>
+          <span class="ch google">Google Ads</span>
+          <span class="ch ec">電商賣場建置</span>
         </div>
       </div>
 
-      <div class="portfolio-card">
-        <div class="card-industry">網紅經紀</div>
-        <div class="card-client">55GO</div>
-        <div class="card-channels">
-          <span class="channel-tag fb">Facebook Ads</span>
+      <div class="p-card">
+        <div class="p-ind">餐飲聯盟平台</div>
+        <div class="p-client">JTK 揪攤集</div>
+        <div class="p-tags">
+          <span class="ch fb">Facebook Ads</span>
+          <span class="ch n8n">n8n 自動化</span>
         </div>
       </div>
 
-      <div class="portfolio-card">
-        <div class="card-industry">數位科技</div>
-        <div class="card-client">洞察數位科技</div>
-        <div class="card-channels">
-          <span class="channel-tag fb">Facebook Ads</span>
+      <div class="p-card">
+        <div class="p-ind">裂變行銷系統</div>
+        <div class="p-client">Mecango 米凱</div>
+        <div class="p-tags">
+          <span class="ch fb">Facebook Ads</span>
+          <span class="ch n8n">n8n 自動化</span>
         </div>
       </div>
 
-      <div class="portfolio-card">
-        <div class="card-industry">看護服務</div>
-        <div class="card-client">力威 / 順心 / 晴美 / 恆愛 / 安捷 / 優善</div>
-        <div class="card-channels">
-          <span class="channel-tag google">Google Ads</span>
-          <span class="channel-tag seo">SEO</span>
+      <div class="p-card">
+        <div class="p-ind">運動時尚</div>
+        <div class="p-client">Avant-Golf</div>
+        <div class="p-tags">
+          <span class="ch ig">IG 短影音</span>
         </div>
       </div>
 
-      <div class="portfolio-card">
-        <div class="card-industry">人力仲介</div>
-        <div class="card-client">中豪人力仲介</div>
-        <div class="card-channels">
-          <span class="channel-tag n8n">n8n 自動化</span>
-          <span class="channel-tag seo">SEO</span>
-          <span class="channel-tag web">網站設計</span>
+      <div class="p-card">
+        <div class="p-ind">交友服務</div>
+        <div class="p-client">圈出新戀情 / 心跳配對 MatchUp</div>
+        <div class="p-tags">
+          <span class="ch fb">Facebook Ads</span>
         </div>
       </div>
 
-      <div class="portfolio-card">
-        <div class="card-industry">金融貸款</div>
-        <div class="card-client">玥鋒理財</div>
-        <div class="card-channels">
-          <span class="channel-tag fb">Facebook Ads</span>
+      <div class="p-card">
+        <div class="p-ind">電商零售</div>
+        <div class="p-client">財神小舖 / KUDONG 酷凍</div>
+        <div class="p-tags">
+          <span class="ch fb">Facebook Ads</span>
+          <span class="ch google">Google Ads</span>
         </div>
       </div>
 
-      <div class="portfolio-card">
-        <div class="card-industry">太陽能儲能</div>
-        <div class="card-client">築能太陽能</div>
-        <div class="card-channels">
-          <span class="channel-tag google">Google Ads</span>
+      <div class="p-card">
+        <div class="p-ind">電商零售</div>
+        <div class="p-client">三劍客歐陸嚴選</div>
+        <div class="p-tags">
+          <span class="ch fb">Facebook Ads</span>
+        </div>
+      </div>
+
+      <div class="p-card">
+        <div class="p-ind">數位科技</div>
+        <div class="p-client">洞察數位科技</div>
+        <div class="p-tags">
+          <span class="ch fb">Facebook Ads</span>
+        </div>
+      </div>
+
+      <div class="p-card">
+        <div class="p-ind">金融貸款</div>
+        <div class="p-client">玥鋒理財</div>
+        <div class="p-tags">
+          <span class="ch fb">Facebook Ads</span>
+        </div>
+      </div>
+
+      <div class="p-card">
+        <div class="p-ind">太陽能儲能</div>
+        <div class="p-client">築能太陽能</div>
+        <div class="p-tags">
+          <span class="ch google">Google Ads</span>
+        </div>
+      </div>
+
+      <div class="p-card">
+        <div class="p-ind">音樂工作室</div>
+        <div class="p-client">悉尼音樂工作室</div>
+        <div class="p-tags">
+          <span class="ch fb">Facebook Ads</span>
+        </div>
+      </div>
+
+      <div class="p-card">
+        <div class="p-ind">網紅經紀</div>
+        <div class="p-client">55GO</div>
+        <div class="p-tags">
+          <span class="ch fb">Facebook Ads</span>
         </div>
       </div>
 
@@ -865,47 +446,36 @@
 </section>
 
 <!-- ════════════════════════ CTA ════════════════════════ -->
-<section id="cta">
-  <div class="cta-slogan">
-    <span class="thin">以簡單的方法</span><br>
-    達成<span class="highlight" style="background:var(--gradient-1);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">不簡單</span>的成效
-  </div>
-  <div class="cta-divider"></div>
-  <div class="cta-name">簡單廣告營銷</div>
-  <div class="cta-role">Dan 楊旼璋 — Founder</div>
-  <div class="cta-contact">
-    <div class="cta-contact-item">Threads <span>@丹丹</span></div>
+<section class="section" style="padding-top:0;">
+  <div class="wrap reveal">
+    <div class="cta">
+      <div class="cta-slogan">
+        <span class="thin">以簡單的方法</span><br>
+        達成<span class="highlight">不簡單</span>的成效
+      </div>
+      <div class="cta-divider"></div>
+      <div class="cta-name">簡單廣告營銷</div>
+      <div class="cta-role">Dan 楊旼璋 — Founder</div>
+      <div class="cta-contact">Threads <span>@丹丹</span></div>
+    </div>
   </div>
 </section>
 
+<footer>
+  <div class="wrap" style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;">
+    <span class="brand">簡單廣告營銷有限公司</span>
+    <span>跨產業成效廣告投放 × 追蹤技術整合</span>
+  </div>
+</footer>
+
 <script>
-  // Intersection Observer for reveal animations
   const reveals = document.querySelectorAll('.reveal');
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('visible');
-      }
+      if (entry.isIntersecting) entry.target.classList.add('visible');
     });
-  }, { threshold: 0.15 });
-
+  }, { threshold: 0.08 });
   reveals.forEach(el => observer.observe(el));
-
-  // Active nav dot
-  const sections = document.querySelectorAll('section');
-  const navLinks = document.querySelectorAll('nav a');
-
-  const navObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        navLinks.forEach(l => l.classList.remove('active'));
-        const active = document.querySelector(`nav a[href="#${entry.target.id}"]`);
-        if (active) active.classList.add('active');
-      }
-    });
-  }, { threshold: 0.5 });
-
-  sections.forEach(s => navObserver.observe(s));
 </script>
 
 </body>

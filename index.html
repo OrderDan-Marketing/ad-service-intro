@@ -36,7 +36,7 @@
   @media(max-width:640px){ .wrap{padding:0 20px;} }
 
   /* ── Hero ── */
-  .hero{padding:88px 0 64px;border-bottom:2px solid var(--ink);position:relative;}
+  .hero{padding:88px 0 64px;border-bottom:2px solid var(--ink);position:relative;text-align:center;}
   .hero .eyebrow{
     display:inline-block;
     font-size:12px;letter-spacing:.42em;text-transform:uppercase;
@@ -58,10 +58,10 @@
   }
   h1 .highlight{color:var(--accent);}
   .hero-sub{
-    font-size:clamp(15px,1.8vw,19px);color:var(--ink-soft);font-weight:300;
-    margin-top:18px;max-width:640px;
+    font-size:clamp(15px,1.8vw,20px);color:var(--ink-soft);font-weight:300;
+    margin:18px auto 0;
   }
-  .hero-stats{display:flex;gap:56px;flex-wrap:wrap;margin-top:44px;}
+  .hero-stats{display:flex;gap:56px;flex-wrap:wrap;margin-top:44px;justify-content:center;}
   .stat .num{
     font-family:'Noto Serif TC',serif;font-weight:900;
     font-size:clamp(30px,4vw,42px);color:var(--accent);line-height:1.1;
@@ -83,11 +83,11 @@
   .section{padding:64px 0;}
   @media(max-width:1024px){ .section{padding:48px 0;} }
   @media(max-width:640px){ .section{padding:40px 0;} }
-  .sec-head{display:flex;align-items:baseline;gap:16px;margin-bottom:30px;}
-  .sec-num{font-family:'Noto Serif TC',serif;font-weight:900;font-size:22px;color:var(--accent);}
-  .sec-title{font-family:'Noto Serif TC',serif;font-weight:700;font-size:clamp(22px,3vw,28px);}
+  .sec-head{display:flex;align-items:baseline;gap:18px;margin-bottom:30px;justify-content:center;}
+  .sec-num{font-family:'Noto Serif TC',serif;font-weight:900;font-size:24px;color:var(--accent);}
+  .sec-title{font-family:'Noto Serif TC',serif;font-weight:700;font-size:clamp(24px,3.2vw,32px);}
   .sec-head .rule{flex:1;height:1px;background:var(--line);align-self:center;}
-  .sec-lede{font-size:15px;color:var(--ink-soft);margin:-16px 0 28px;}
+  .sec-lede{font-size:16px;color:var(--ink-soft);margin:-16px 0 28px;text-align:center;}
 
   /* ── Process steps (01–05 合併) ── */
   .step{
@@ -97,37 +97,40 @@
   }
   .step:hover{transform:translateX(4px);box-shadow:-4px 4px 0 var(--paper-2);}
   .step .n{
-    flex-shrink:0;width:52px;
-    font-family:'Noto Serif TC',serif;font-weight:900;font-size:30px;
-    color:transparent;-webkit-text-stroke:1.3px var(--accent);
+    flex-shrink:0;width:68px;
+    font-family:'Noto Serif TC',serif;font-weight:900;font-size:42px;
+    color:transparent;-webkit-text-stroke:1.5px var(--accent);
     line-height:1.15;
   }
   .step .body{flex:1;}
-  .step .t{font-family:'Noto Serif TC',serif;font-weight:700;font-size:19px;}
+  .step .t{font-family:'Noto Serif TC',serif;font-weight:700;font-size:clamp(21px,2.4vw,26px);}
   .step .t em{font-style:normal;color:var(--accent);}
-  .step .d{font-size:14.5px;color:var(--ink-soft);margin-top:6px;line-height:1.8;max-width:760px;}
-  .tag-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px;}
+  .step .d{font-size:17px;color:var(--ink-soft);margin-top:8px;line-height:1.85;}
+  .tag-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px;}
   .tag{
-    font-size:12px;font-weight:500;letter-spacing:.05em;
-    padding:4px 12px;border-radius:3px;
+    font-size:13.5px;font-weight:500;letter-spacing:.05em;
+    padding:5px 14px;border-radius:3px;
     background:var(--paper-2);color:var(--ink-soft);
     border:1px solid var(--line);
   }
   .funnel{
-    display:flex;align-items:center;gap:10px;flex-wrap:wrap;
-    margin-top:12px;font-size:13.5px;
+    display:flex;align-items:center;gap:14px;flex-wrap:wrap;
+    margin-top:16px;
   }
   .funnel b{
-    font-weight:700;padding:5px 14px;border-radius:3px;background:var(--paper-2);
-    border-left:3px solid var(--accent);
+    font-family:'Noto Serif TC',serif;font-weight:700;font-size:20px;
+    padding:8px 26px;border-radius:4px;color:#fff;
+    background:var(--accent);letter-spacing:.1em;
   }
-  .funnel b:nth-child(3){border-left-color:var(--accent-soft);}
-  .funnel b:nth-child(5){border-left-color:var(--gold);}
-  .funnel span{color:var(--ink-soft);}
-  .funnel .f-note{width:100%;font-size:12.5px;color:var(--ink-soft);}
+  .funnel b:nth-child(3){background:var(--accent-soft);}
+  .funnel b:nth-child(5){background:var(--gold);}
+  .funnel span{color:var(--ink-soft);font-size:22px;font-weight:700;}
+  .funnel .f-note{width:100%;font-size:14.5px;color:var(--ink-soft);}
   @media(max-width:640px){
     .step{padding:18px;gap:14px;}
-    .step .n{width:40px;font-size:24px;}
+    .step .n{width:48px;font-size:30px;}
+    .funnel b{font-size:17px;padding:6px 18px;}
+    .funnel span{font-size:18px;}
   }
 
   /* ── Portfolio ── */
@@ -227,6 +230,7 @@
 <section class="section">
   <div class="wrap reveal">
     <div class="sec-head">
+      <span class="rule"></span>
       <span class="sec-num">01</span>
       <span class="sec-title">服務流程</span>
       <span class="rule"></span>
@@ -295,6 +299,7 @@
 <section class="section" style="padding-top:0;">
   <div class="wrap reveal">
     <div class="sec-head">
+      <span class="rule"></span>
       <span class="sec-num">02</span>
       <span class="sec-title">跨產業實戰紀錄</span>
       <span class="rule"></span>

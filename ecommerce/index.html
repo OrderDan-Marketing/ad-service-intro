@@ -35,17 +35,18 @@
 
   /* Header */
   .head{position:relative;padding-bottom:34px;margin-bottom:48px;border-bottom:2px solid var(--ink);}
-  .back{
-    display:inline-block;margin-bottom:22px;
-    font-size:13px;font-weight:500;letter-spacing:.08em;
-    color:var(--ink-soft);text-decoration:none;
-    transition:color .18s ease;
-  }
-  .back:hover{color:var(--accent);}
   .eyebrow{
     font-size:12px;letter-spacing:.42em;text-transform:uppercase;
-    color:var(--accent);font-weight:700;margin-bottom:20px;
+    color:var(--accent);font-weight:700;margin-bottom:14px;
   }
+  .page-links{display:flex;gap:28px;margin-bottom:22px;}
+  .page-links a{
+    text-decoration:none;color:var(--ink-soft);font-size:15.5px;letter-spacing:.08em;
+    padding-bottom:4px;border-bottom:2px solid transparent;
+    transition:color .15s ease,border-color .15s ease;
+  }
+  .page-links a:hover{color:var(--accent);}
+  .page-links a.active{color:var(--ink);font-weight:700;border-bottom-color:var(--accent);}
   h1{
     font-family:'Noto Serif TC',serif;font-weight:900;
     font-size:clamp(34px,6vw,56px);line-height:1.1;letter-spacing:.01em;
@@ -128,8 +129,6 @@
     display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;
     font-size:12.5px;color:var(--ink-soft);letter-spacing:.04em;}
   footer .brand{font-family:'Noto Serif TC',serif;font-weight:700;color:var(--ink);}
-  footer a{color:var(--accent);font-weight:700;text-decoration:none;}
-  footer a:hover{text-decoration:underline;}
 
   @media(max-width:560px){
     .wrap{padding:44px 20px 60px;}
@@ -149,8 +148,11 @@
 
   <header class="head">
     <div class="mark">廣</div>
-    <a class="back" href="/">← 簡單廣告營銷 服務總覽</a>
     <div class="eyebrow">Performance Advertising · Service Scope</div>
+    <div class="page-links">
+      <a href="/">首頁</a>
+      <a href="/ecommerce/" class="active">電商投放服務</a>
+    </div>
     <h1>廣告投放服務對焦表
       <span class="sub">以「素材切角 × 精準 TA」為核心的成效投放</span>
     </h1>
@@ -264,7 +266,7 @@
 
   <footer>
     <span class="brand">簡單廣告營銷有限公司</span>
-    <span>本表為服務範圍對焦用，實際條款以雙方確認為準 ・ <a href="/">回服務總覽</a></span>
+    <span>本表為服務範圍對焦用，實際條款以雙方確認為準</span>
   </footer>
 
 </div>

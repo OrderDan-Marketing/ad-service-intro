@@ -106,6 +106,7 @@
   .step .t{font-family:'Noto Serif TC',serif;font-weight:700;font-size:clamp(21px,2.4vw,26px);}
   .step .t em{font-style:normal;color:var(--accent);}
   .step .d{font-size:17px;color:var(--ink-soft);margin-top:8px;line-height:1.85;}
+  .step .d .hl{color:var(--accent);font-weight:700;}
   .tag-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px;}
   .tag{
     font-size:13.5px;font-weight:500;letter-spacing:.05em;
@@ -132,6 +133,22 @@
     .funnel b{font-size:17px;padding:6px 18px;}
     .funnel span{font-size:18px;}
   }
+
+  /* ── Portfolio filter ── */
+  .filter-bar{
+    display:flex;flex-wrap:wrap;gap:10px;justify-content:center;
+    margin-bottom:26px;
+  }
+  .f-btn{
+    font-family:'Noto Sans TC',sans-serif;
+    font-size:14.5px;font-weight:500;letter-spacing:.05em;
+    padding:8px 20px;border-radius:100px;cursor:pointer;
+    background:var(--card);color:var(--ink-soft);
+    border:1px solid var(--line);
+    transition:all .18s ease;
+  }
+  .f-btn:hover{border-color:var(--accent);color:var(--accent);}
+  .f-btn.active{background:var(--accent);border-color:var(--accent);color:#fff;font-weight:700;}
 
   /* ── Portfolio ── */
   .portfolio-grid{
@@ -163,7 +180,7 @@
   .ch.seo{background:rgba(166,130,44,.16);color:#7d6120;}
   .ch.web{background:rgba(107,63,160,.1);color:#5c3689;}
   .ch.ec{background:rgba(200,110,20,.12);color:#8f5410;}
-  .ch.n8n{background:rgba(0,137,123,.12);color:#00655c;}
+  .ch.gtm{background:rgba(0,110,150,.12);color:#00566e;}
 
   /* ── CTA ── */
   .cta{
@@ -274,9 +291,9 @@
       <div class="n">04</div>
       <div class="body">
         <div class="t">建置客製 <em>AI 助理</em>，日追蹤績效</div>
-        <div class="d">n8n 自動化串接各平台數據，AI 助理每日監控指標異常、產出優化建議——從「週報等結果」升級為「每日即時反應」。</div>
+        <div class="d">n8n 自動化串接各平台數據，AI 助理每日監控指標異常、產出優化建議——<span class="hl">績效即時通知</span>、<span class="hl">名單即時傳送</span>，從「週報等結果」升級為「每日即時反應」。</div>
         <div class="tag-row">
-          <span class="tag">n8n 自動化</span><span class="tag">AI 績效監控</span><span class="tag">每日異常偵測</span>
+          <span class="tag">n8n 自動化</span><span class="tag">AI 績效監控</span><span class="tag">每日異常偵測</span><span class="tag">名單即時傳送</span>
         </div>
       </div>
     </div>
@@ -305,9 +322,20 @@
       <span class="rule"></span>
     </div>
     <p class="sec-lede">服務橫跨多種產業，廣告投放 × 技術整合雙軌並行</p>
+    <div class="filter-bar">
+      <button class="f-btn active" data-filter="all">全部</button>
+      <button class="f-btn" data-filter="fb">Facebook Ads</button>
+      <button class="f-btn" data-filter="google">Google Ads</button>
+      <button class="f-btn" data-filter="seo">SEO</button>
+      <button class="f-btn" data-filter="web">網站設計</button>
+      <button class="f-btn" data-filter="shorts">短影音</button>
+      <button class="f-btn" data-filter="gtm">追蹤技術</button>
+      <button class="f-btn" data-filter="ec">電商賣場建置</button>
+      <button class="f-btn" data-filter="ecops">電商通路運營</button>
+    </div>
     <div class="portfolio-grid">
 
-      <div class="p-card">
+      <div class="p-card" data-tags="google seo web">
         <div class="p-ind">看護長照</div>
         <div class="p-client">順心 / 恆愛 / 優善 / 晴美 / 仁安 / 力威 / 久伴 / 長安</div>
         <div class="p-tags">
@@ -317,17 +345,16 @@
         </div>
       </div>
 
-      <div class="p-card">
+      <div class="p-card" data-tags="seo web">
         <div class="p-ind">人力仲介</div>
         <div class="p-client">中豪人力仲介</div>
         <div class="p-tags">
-          <span class="ch n8n">n8n 自動化</span>
           <span class="ch seo">SEO</span>
           <span class="ch web">網站設計</span>
         </div>
       </div>
 
-      <div class="p-card">
+      <div class="p-card" data-tags="fb google">
         <div class="p-ind">室內設計</div>
         <div class="p-client">萬寶隆空間設計</div>
         <div class="p-tags">
@@ -336,7 +363,7 @@
         </div>
       </div>
 
-      <div class="p-card">
+      <div class="p-card" data-tags="web seo">
         <div class="p-ind">室內設計</div>
         <div class="p-client">品家設計</div>
         <div class="p-tags">
@@ -345,9 +372,9 @@
         </div>
       </div>
 
-      <div class="p-card">
+      <div class="p-card" data-tags="fb google ec">
         <div class="p-ind">餐飲食品</div>
-        <div class="p-client">麗園尋鮮坊</div>
+        <div class="p-client">全國麗園 尋鮮坊</div>
         <div class="p-tags">
           <span class="ch fb">Facebook Ads</span>
           <span class="ch google">Google Ads</span>
@@ -355,33 +382,57 @@
         </div>
       </div>
 
-      <div class="p-card">
+      <div class="p-card" data-tags="ecops google">
+        <div class="p-ind">餐飲飯店</div>
+        <div class="p-client">全國麗園</div>
+        <div class="p-tags">
+          <span class="ch ec">電商通路運營</span>
+          <span class="ch google">Google Ads</span>
+        </div>
+      </div>
+
+      <div class="p-card" data-tags="fb">
         <div class="p-ind">餐飲聯盟平台</div>
         <div class="p-client">JTK 揪攤集</div>
         <div class="p-tags">
           <span class="ch fb">Facebook Ads</span>
-          <span class="ch n8n">n8n 自動化</span>
         </div>
       </div>
 
-      <div class="p-card">
+      <div class="p-card" data-tags="fb">
         <div class="p-ind">裂變行銷系統</div>
-        <div class="p-client">Mecango 米凱</div>
+        <div class="p-client">Mecango Line CRM 系統</div>
         <div class="p-tags">
           <span class="ch fb">Facebook Ads</span>
-          <span class="ch n8n">n8n 自動化</span>
         </div>
       </div>
 
-      <div class="p-card">
+      <div class="p-card" data-tags="shorts fb">
         <div class="p-ind">運動時尚</div>
-        <div class="p-client">Avant-Golf</div>
+        <div class="p-client">Avant-Golf 雅凡高爾夫</div>
         <div class="p-tags">
-          <span class="ch ig">IG 短影音</span>
+          <span class="ch ig">短影音</span>
+          <span class="ch fb">Facebook Ads</span>
         </div>
       </div>
 
-      <div class="p-card">
+      <div class="p-card" data-tags="fb">
+        <div class="p-ind">個人IP行銷</div>
+        <div class="p-client">郁婷房仲</div>
+        <div class="p-tags">
+          <span class="ch fb">Facebook Ads</span>
+        </div>
+      </div>
+
+      <div class="p-card" data-tags="fb">
+        <div class="p-ind">健身產業</div>
+        <div class="p-client">麋鹿健身</div>
+        <div class="p-tags">
+          <span class="ch fb">Facebook Ads</span>
+        </div>
+      </div>
+
+      <div class="p-card" data-tags="fb">
         <div class="p-ind">交友服務</div>
         <div class="p-client">圈出新戀情 / 心跳配對 MatchUp</div>
         <div class="p-tags">
@@ -389,16 +440,24 @@
         </div>
       </div>
 
-      <div class="p-card">
+      <div class="p-card" data-tags="fb google">
         <div class="p-ind">電商零售</div>
-        <div class="p-client">財神小舖 / KUDONG 酷凍</div>
+        <div class="p-client">財神小舖</div>
         <div class="p-tags">
           <span class="ch fb">Facebook Ads</span>
           <span class="ch google">Google Ads</span>
         </div>
       </div>
 
-      <div class="p-card">
+      <div class="p-card" data-tags="google">
+        <div class="p-ind">電商零售</div>
+        <div class="p-client">KUDONG 酷凍</div>
+        <div class="p-tags">
+          <span class="ch google">Google Ads</span>
+        </div>
+      </div>
+
+      <div class="p-card" data-tags="fb">
         <div class="p-ind">電商零售</div>
         <div class="p-client">三劍客歐陸嚴選</div>
         <div class="p-tags">
@@ -406,31 +465,40 @@
         </div>
       </div>
 
-      <div class="p-card">
-        <div class="p-ind">數位科技</div>
-        <div class="p-client">洞察數位科技</div>
+      <div class="p-card" data-tags="gtm">
+        <div class="p-ind">3C 通訊</div>
+        <div class="p-client">嵿石通訊</div>
         <div class="p-tags">
-          <span class="ch fb">Facebook Ads</span>
+          <span class="ch gtm">追蹤技術</span>
         </div>
       </div>
 
-      <div class="p-card">
+      <div class="p-card" data-tags="web">
+        <div class="p-ind">烘焙電商</div>
+        <div class="p-client">貝詩客 basic 手感烘焙</div>
+        <div class="p-tags">
+          <span class="ch web">網站設計</span>
+        </div>
+      </div>
+
+      <div class="p-card" data-tags="google">
         <div class="p-ind">金融貸款</div>
         <div class="p-client">玥鋒理財</div>
-        <div class="p-tags">
-          <span class="ch fb">Facebook Ads</span>
-        </div>
-      </div>
-
-      <div class="p-card">
-        <div class="p-ind">太陽能儲能</div>
-        <div class="p-client">築能太陽能</div>
         <div class="p-tags">
           <span class="ch google">Google Ads</span>
         </div>
       </div>
 
-      <div class="p-card">
+      <div class="p-card" data-tags="google seo">
+        <div class="p-ind">太陽能儲能</div>
+        <div class="p-client">築能太陽能</div>
+        <div class="p-tags">
+          <span class="ch google">Google Ads</span>
+          <span class="ch seo">SEO</span>
+        </div>
+      </div>
+
+      <div class="p-card" data-tags="fb">
         <div class="p-ind">音樂工作室</div>
         <div class="p-client">悉尼音樂工作室</div>
         <div class="p-tags">
@@ -438,7 +506,7 @@
         </div>
       </div>
 
-      <div class="p-card">
+      <div class="p-card" data-tags="fb">
         <div class="p-ind">網紅經紀</div>
         <div class="p-client">55GO</div>
         <div class="p-tags">
@@ -481,6 +549,19 @@
     });
   }, { threshold: 0.08 });
   reveals.forEach(el => observer.observe(el));
+
+  // Portfolio tag filter
+  const fBtns = document.querySelectorAll('.f-btn');
+  const pCards = document.querySelectorAll('.p-card');
+  fBtns.forEach(btn => btn.addEventListener('click', () => {
+    fBtns.forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    const f = btn.dataset.filter;
+    pCards.forEach(card => {
+      const show = f === 'all' || card.dataset.tags.split(' ').includes(f);
+      card.style.display = show ? '' : 'none';
+    });
+  }));
 </script>
 
 </body>
